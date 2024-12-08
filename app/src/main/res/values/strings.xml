@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TrainManager</string>
+    <string name="back">Volver</string>
+
 </resources>
