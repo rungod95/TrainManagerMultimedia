@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">TrainManager</string>
     <string name="back">Volver</string>
-
+    <string-array name="training_levels">
+        <item>Básico</item>
+        <item>Intermedio</item>
+        <item>Avanzado</item>
+    </string-array>
 </resources>

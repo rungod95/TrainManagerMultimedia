@@ -5,21 +5,21 @@ import com.example.trainmanager.domain.Training;
 import java.util.List;
 
 public interface TrainingListContract {
+    interface Model {
+        interface OnLoadTrainingsListener {
+            void onLoadTrainingsSuccess(List<Training> trainingList);
+            void onLoadTrainingsError(String message);
+        }
+        void loadTrainings(OnLoadTrainingsListener listener);
+    }
+
     interface View {
-        void showTrainings(List<Training> trainings);
-        void showError(String message);
+        void listTrainings(List<Training> trainingList);
+        void showErrorMessage(String message);
+        void showSuccessMessage(String message);
     }
 
     interface Presenter {
-        void getTrainings();
-    }
-
-    interface Model {
-        interface OnFinishedListener {
-            void onFinished(List<Training> trainings);
-            void onFailure(Throwable t);
-        }
-
-        void fetchTrainings(OnFinishedListener listener);
+        void loadTrainings();
     }
 }

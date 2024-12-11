@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.RegisterTrainingView">
+
+    <!-- Campo para el nombre del entrenamiento -->
+    <EditText
+        android:id="@+id/et_training_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Tipo del entrenamiento"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Campo para la fecha del entrenamiento -->
+    <EditText
+        android:id="@+id/et_training_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Fecha (YYYY-MM-DD)"
+        app:layout_constraintTop_toBottomOf="@id/et_training_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Campo para el nivel -->
+    <Spinner
+        android:id="@+id/sp_training_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/training_levels"
+        app:layout_constraintTop_toBottomOf="@id/et_training_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Campo para la duración -->
+    <EditText
+        android:id="@+id/et_training_duration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Duración en minutos"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/sp_training_level"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Checkbox para marcar si está completado -->
+    <CheckBox
+        android:id="@+id/cb_training_completed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completado"
+        app:layout_constraintTop_toBottomOf="@id/et_training_duration"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Botón para guardar -->
+    <Button
+        android:id="@+id/btn_save_training"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        app:layout_constraintTop_toBottomOf="@id/cb_training_completed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+    <Button
+        android:id="@+id/btn_open_map"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Ubicación en el Mapa"
+        app:layout_constraintTop_toBottomOf="@id/btn_save_training"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,19 +1,37 @@
 package com.example.trainmanager.model;
 
+import com.example.trainmanager.contract.TrainingListContract;
+import com.example.trainmanager.api.TrainingApi;
+import com.example.trainmanager.api.TrainingApiInterface;
 import com.example.trainmanager.domain.Training;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class TrainingListModel {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    public List<Training> getTrainings() {
-        // Simulación de datos estáticos (puedes cambiar esto por llamadas a una API)
-        List<Training> trainings = new ArrayList<>();
-        trainings.add(new Training("Cardio", LocalDate.of(2024, 1, 10), "Intermedio", 45, true));
-        trainings.add(new Training("Fuerza", LocalDate.of(2024, 2, 5), "Avanzado", 60, false));
-        trainings.add(new Training("Flexibilidad", LocalDate.of(2024, 3, 15), "Básico", 30, true));
-        return trainings;
+public class TrainingListModel implements TrainingListContract.Model {
+
+    @Override
+    public void loadTrainings(OnLoadTrainingsListener listener) {
+        TrainingApiInterface trainingApi = TrainingApi.buildInstance();
+        Call<List<Training>> getTrainingsCall = trainingApi.getTrainings();
+
+        getTrainingsCall.enqueue(new Callback<List<Training>>() {
+            @Override
+            public void onResponse(Call<List<Training>> call, Response<List<Training>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    listener.onLoadTrainingsSuccess(response.body());
+                } else {
+                    listener.onLoadTrainingsError("No trainings available or API error: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Training>> call, Throwable t) {
+                listener.onLoadTrainingsError("Error connecting to the API: " + t.getMessage());
+            }
+        });
     }
 }

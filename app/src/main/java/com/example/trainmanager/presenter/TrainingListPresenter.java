@@ -7,7 +7,7 @@ import com.example.trainmanager.model.TrainingListModel;
 import java.time.LocalDate;
 import java.util.List;
 
-public class TrainingListPresenter implements TrainingListContract.Presenter {
+public class TrainingListPresenter implements TrainingListContract.Presenter, TrainingListContract.Model.OnLoadTrainingsListener {
 
     private final TrainingListContract.View view;
     private final TrainingListModel model;
@@ -19,13 +19,15 @@ public class TrainingListPresenter implements TrainingListContract.Presenter {
     }
 
     @Override
-    public void getTrainings() {
-        try {
-            // Simulamos datos desde el modelo o llamamos a una API
-            List<Training> trainings = model.getTrainings();
-            view.showTrainings(trainings); // Mostramos los datos en la vista
-        } catch (Exception e) {
-            view.showError("Error al cargar los entrenamientos: " + e.getMessage());
-        }
+    public void loadTrainings() {
+        model.loadTrainings(this);
+    }
+    @Override
+    public void onLoadTrainingsSuccess(List<Training> trainingList) {
+        view.listTrainings(trainingList);
+    }
+    @Override
+    public void onLoadTrainingsError(String message) {
+        view.showErrorMessage(message);
     }
 }

@@ -6,25 +6,28 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+    <!-- Nombre del entrenamiento -->
     <TextView
-        android:id="@+id/trainingName"
+        android:id="@+id/tv_training_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Nombre del Entrenamiento"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Fecha del entrenamiento -->
     <TextView
-        android:id="@+id/trainingDate"
+        android:id="@+id/tv_training_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Fecha: 01-01-2024"
+        android:text="Fecha del Entrenamiento"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trainingName" />
+        app:layout_constraintTop_toBottomOf="@id/tv_training_name"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/trainingLevel"
@@ -33,6 +36,6 @@
         android:text="Nivel: Básico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trainingDate" />
+        app:layout_constraintTop_toBottomOf="@id/tv_training_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
