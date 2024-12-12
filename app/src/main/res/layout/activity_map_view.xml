@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".view.MapViewActivity">
 
+    <!-- Mapa -->
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="0dp"
@@ -15,4 +16,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Botón flotante sobre el mapa -->
+    <Button
+        android:id="@+id/btn_confirm_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmar Ubicación"
+        android:backgroundTint="@color/teal_200"
+    android:textColor="@android:color/white"
+    android:layout_margin="16dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trainmanager.R;
@@ -16,11 +17,16 @@ import com.example.trainmanager.presenter.RegisterTrainingPresenter;
 
 public class RegisterTrainingView extends AppCompatActivity implements RegisterTrainingContract.View {
 
+    private static final int REQUEST_MAP_SELECTION = 1;
+
     private EditText nameEditText, dateEditText, durationEditText;
     private Spinner levelSpinner;
     private Button saveButton, mapButton;
 
     private RegisterTrainingPresenter presenter;
+
+    private Double selectedLatitude = null;
+    private Double selectedLongitude = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,13 @@ public class RegisterTrainingView extends AppCompatActivity implements RegisterT
 
             try {
                 int duration = Integer.parseInt(durationStr);
-                presenter.saveTraining(tipo, date, level, duration);
+
+                if (selectedLatitude == null || selectedLongitude == null) {
+                    Toast.makeText(this, "Please select a location on the map", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                presenter.saveTrainingWithLocation(tipo, date, level, duration, selectedLatitude, selectedLongitude);
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Invalid duration format", Toast.LENGTH_SHORT).show();
             }
@@ -70,8 +82,19 @@ public class RegisterTrainingView extends AppCompatActivity implements RegisterT
         // Configurar el botón de mapa
         mapButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapViewActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_MAP_SELECTION);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_MAP_SELECTION && resultCode == RESULT_OK && data != null) {
+            selectedLatitude = data.getDoubleExtra("latitude", 0);
+            selectedLongitude = data.getDoubleExtra("longitude", 0);
+
+            Toast.makeText(this, "Location selected: " + selectedLatitude + ", " + selectedLongitude, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
