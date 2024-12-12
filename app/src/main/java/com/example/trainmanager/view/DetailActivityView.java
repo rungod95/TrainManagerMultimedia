@@ -2,6 +2,7 @@ package com.example.trainmanager.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,10 @@ public class DetailActivityView extends AppCompatActivity {
     private TextView durationTextView;
     private TextView dateTextView;
     private CheckBox completedCheckBox;
+    private Button viewLocationButton;
+
+    private double trainingLatitude;
+    private double trainingLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +36,12 @@ public class DetailActivityView extends AppCompatActivity {
         setContentView(R.layout.activity_detail_view);
 
         // Inicializar vistas
-        typeTextView = findViewById(R.id.tv_training_name); // Cambié el identificador a 'tv_training_name' para mostrar el tipo
+        typeTextView = findViewById(R.id.tv_training_name);
         levelTextView = findViewById(R.id.tv_training_level);
         durationTextView = findViewById(R.id.tv_training_duration);
         dateTextView = findViewById(R.id.tv_training_date);
         completedCheckBox = findViewById(R.id.cb_training_completed);
+        viewLocationButton = findViewById(R.id.btn_view_location);
 
         // Obtener el ID del entrenamiento desde el intent
         Intent intent = getIntent();
@@ -43,6 +49,9 @@ public class DetailActivityView extends AppCompatActivity {
 
         // Llamada a la API para obtener detalles del entrenamiento
         fetchTrainingDetails(trainingId);
+
+        // Configurar el botón para ver la ubicación
+        viewLocationButton.setOnClickListener(v -> openMap());
     }
 
     private void fetchTrainingDetails(long trainingId) {
@@ -72,5 +81,25 @@ public class DetailActivityView extends AppCompatActivity {
         durationTextView.setText("Duration: " + training.getDuracion() + " min");
         dateTextView.setText("Date: " + training.getFecha().toString());
         completedCheckBox.setChecked(training.isCompletado());
+
+        // Guardar las coordenadas
+        trainingLatitude = training.getLatitude() != null ? training.getLatitude() : 0.0;
+        trainingLongitude = training.getLongitude() != null ? training.getLongitude() : 0.0;
+
+        if (trainingLatitude == 0.0 && trainingLongitude == 0.0) {
+            viewLocationButton.setEnabled(false);
+            Toast.makeText(this, "No location available for this training.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openMap() {
+        if (trainingLatitude != 0.0 && trainingLongitude != 0.0) {
+            Intent mapIntent = new Intent(this, MapViewActivity.class);
+            mapIntent.putExtra("latitude", trainingLatitude);
+            mapIntent.putExtra("longitude", trainingLongitude);
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(this, "Location not available", Toast.LENGTH_SHORT).show();
+        }
     }
 }
